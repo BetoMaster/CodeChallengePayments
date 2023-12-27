@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RECIPTSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Payments" Relationship="RECIPTSModel.FK__Payments__UserID__6383C8BA" FromRole="Users" ToRole="Payments" />
+  </EntityType>
+  <EntityContainer Name="RECIPTSEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <FunctionImport Name="GetUsers" ReturnType="Collection(RECIPTSModel.GetUsers_Result)" />
+    <FunctionImport Name="ValidateUser" ReturnType="Collection(RECIPTSModel.ValidateUser_Result)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Payments" EntityType="RECIPTSModel.Payments" />
+    <AssociationSet Name="FK__Payments__UserID__6383C8BA" Association="RECIPTSModel.FK__Payments__UserID__6383C8BA">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <FunctionImport Name="AddPayment">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Amount" Mode="In" Type="Int32" />
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetUserIDByEmail" ReturnType="Collection(Int32)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdatePayment">
+      <Parameter Name="PaymentID" Mode="In" Type="Int32" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Amount" Mode="In" Type="Decimal" />
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetAllPayments" ReturnType="Collection(RECIPTSModel.GetAllPayments_Result2)" />
+    <FunctionImport Name="AddUser">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetPaymentsByUserID" ReturnType="Collection(RECIPTSModel.GetPaymentsByUserID_Result1)">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeletePaymentByID">
+      <Parameter Name="PaymentID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="GetUsers_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="ValidateUser_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Password" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Users" Relationship="RECIPTSModel.FK__Payments__UserID__6383C8BA" FromRole="Payments" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK__Payments__UserID__6383C8BA">
+    <End Type="RECIPTSModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="RECIPTSModel.Payments" Role="Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetAllPayments_Result">
+    <Property Type="Int32" Name="PaymentID" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetAllPayments_Result1">
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetPaymentsByUserID_Result">
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetAllPayments_Result2">
+    <Property Type="Int32" Name="PaymentID" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetPaymentsByUserID_Result1">
+    <Property Type="Int32" Name="PaymentID" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+  </ComplexType>
+</Schema>

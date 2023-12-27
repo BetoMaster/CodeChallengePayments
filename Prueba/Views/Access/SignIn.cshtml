@@ -1,0 +1,56 @@
+﻿@model Prueba.Models.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Sign In";
+    Layout = "~/Views/Shared/_Layout-Login.cshtml";
+
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("SignIn", "Access", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+            @Html.LabelFor(d => d.Name)
+            <div class="form-group">
+
+                @Html.TextBoxFor(d => d.Name, new { @class = "form-control " })
+                @Html.ValidationMessage("Name", new { @class = "text-danger" })
+            </div>
+            <br />
+            @Html.LabelFor(d => d.Email)
+            <div class="form-group">
+
+                @Html.TextBoxFor(d => d.Email, new { @class = "form-control " })
+                @Html.ValidationMessage("Email", new { @class = "text-danger" })
+
+            </div>
+            <br />
+            @Html.LabelFor(d => d.Password)
+            <div class="form-group">
+
+                @Html.PasswordFor(d => d.Password, new { @class = "form-control " })
+                @Html.ValidationMessage("Password", new { @class = "text-danger" })
+
+            </div>
+            <br />
+            @Html.LabelFor(d => d.ConfirmPassword)
+            <div class="form-group">
+
+                @Html.PasswordFor(d => d.ConfirmPassword, new { @class = "form-control " })
+
+            </div>
+            <br />
+
+            <div style="text-align:right;">
+                <input type="submit" class="btn btn-success" value="Sign In" />
+            </div>
+
+
+
+        }
+    </div>
+</div>
+
+

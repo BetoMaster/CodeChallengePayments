@@ -1,0 +1,47 @@
+﻿@model Prueba.Models.ViewModels.PaymentViewModel
+
+@{
+    ViewBag.Title = "Register Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Update Payments</h2>
+
+<div class="form-horizontal">
+    <h4>Fill the fields with the information of the payment.</h4>
+    <hr />
+    @using (Html.BeginForm("Update", "Payment", FormMethod.Post, new { role = "form", @class = "" }))
+    {
+        @Html.HiddenFor(d=>d.id)
+        <div class="form-group">
+            @Html.LabelFor(d => d.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(d => d.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(d => d.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(d => d.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(d => d.Amount, new { @class = "form-control", type = "number", step = "0.01" })
+                @Html.ValidationMessageFor(d => d.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(d => d.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(d => d.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(d => d.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>

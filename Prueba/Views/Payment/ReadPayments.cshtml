@@ -1,0 +1,134 @@
+﻿@model List<Prueba.Models.TableViewModels.PaymentTableViewModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <!-- Mostrar mensaje de error si existe -->
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <br />
+
+        <table class="table table-bordered" id="PayTable">
+            <col class="col1" />
+            <col class="col2" />
+            <col class="col3" />
+            <col class="col4" />
+            <tr>
+                <th>Select Payments</th>
+                <th>Payment Description</th>
+                <th>Total</th>
+                <th>Payment date</th>
+            </tr>
+
+            <tbody>
+                <!-- Iterar sobre cada elemento del modelo y mostrarlos en la tabla -->
+                @foreach (var oElement in Model)
+                {
+                    <tr>
+                        <!-- Checkbox para seleccionar pagos -->
+                        <td>
+                            <input type="checkbox" name="selectedPayments" value="@oElement.PaymentID" />
+                        </td>
+                        <!-- Mostrar la descripción, el monto y la fecha del pago -->
+                        <td>@oElement.Description</td>
+                        <td>@oElement.Amount</td>
+                        <td>@oElement.Date</td>
+                        <!-- Botón para actualizar el pago -->
+                        <td>
+                            <input onclick="document.location.href = '@Url.Content("~/Payment/Update/"+oElement.PaymentID)'" type="button" value="Update Payment" class="btn btn-default" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Botón para eliminar pagos -->
+        <input type="submit" id="btnDelete" value="Delete Payments" class="btn btn-danger" />
+    </div>
+</div>
+
+<script>
+    // Función para ocultar la columna del checkbox al cargar la página
+    function hide_column_on_load() {
+        const table = document.getElementById('PayTable');
+        const column = table.getElementsByTagName('col')[0];
+        if (column) {
+            // Ocultar la columna al cargar la página
+            column.style.visibility = "collapse";
+        }
+    }
+
+    // Función para alternar la visibilidad de la columna
+    function toggle_column(col_no) {
+        const table = document.getElementById('PayTable');
+        const column = table.getElementsByTagName('col')[col_no - 2];
+        if (column) {
+            // Alternar la visibilidad de la columna
+            column.style.visibility = column.style.visibility === "collapse" ? "" : "collapse";
+            // Cambiar el texto del botón
+            btnDelete.value = column.style.visibility === "collapse" ? "Delete Payments" : "Select payments to delete";
+        }
+    }
+
+    // Función para construir y enviar la lista de IDs seleccionados para eliminar
+    function delete_selected_payments() {
+        const checkboxes = document.getElementsByName('selectedPayments');
+        const selectedIDs = [];
+
+        for (const checkbox of checkboxes) {
+            if (checkbox.checked) {
+                selectedIDs.push(checkbox.value);
+            }
+        }
+
+        if (selectedIDs.length > 0) {
+
+            // Preguntar al usuario si realmente quiere proceder con la eliminación
+            if (confirm("This will delete the data. Do you want to proceed?")) {
+                // Realizar la solicitud AJAX para eliminar los pagos seleccionados
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '@Url.Content("~/Payment/DeleteSelectedPayments")', true);
+                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log('Pagos eliminados exitosamente.');
+                        location.reload();
+                    } else {
+                        console.error('Error al intentar eliminar los pagos.');
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error('Error de red al intentar eliminar los pagos.');
+                };
+
+                // Convertir la lista de IDs a una cadena JSON y enviarla en el cuerpo de la solicitud
+                const payload = JSON.stringify({ paymentIDs: selectedIDs });
+                xhr.send(payload);
+            } else {
+                console.log('Eliminación cancelada por el usuario.');
+            }
+        } else {
+            if (selectedIDs == 0) { 
+            console.log('No se han seleccionado pagos para eliminar.');
+        }
+    }
+}
+
+
+    // Llamar a la función para ocultar la columna al cargar la página
+    window.onload = hide_column_on_load;
+
+    // Asociar la función toggle_column al botón
+    const btnDelete = document.getElementById('btnDelete');
+    btnDelete.addEventListener("click", () => {
+        toggle_column(2);
+        delete_selected_payments();
+    });
+</script>
