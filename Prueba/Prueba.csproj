@@ -232,7 +232,6 @@
     <Content Include="Views\Payment\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\LogOff\" />
   </ItemGroup>
   <ItemGroup>

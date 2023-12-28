@@ -87,3 +87,4 @@ C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\EntityFra
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\EntityFramework.SqlServer.dll
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\EntityFramework.xml
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\EntityFramework.SqlServer.xml
+C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\obj\Debug\Prueba.csproj.AssemblyReference.cache
