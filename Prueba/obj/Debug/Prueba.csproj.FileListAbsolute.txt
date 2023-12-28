@@ -79,7 +79,6 @@ C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\es\System
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\es\System.Web.WebPages.resources.dll
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\obj\Debug\Prueba.csproj.AssemblyReference.cache
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\obj\Debug\Prueba.csproj.CoreCompileInputs.cache
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\obj\Debug\Prueba.csproj.CopyComplete
 C:\Users\NEOLAPS\Documents\VisualStudioProjects\.Net\Prueba\Prueba\obj\Debug\Prueba.dll
